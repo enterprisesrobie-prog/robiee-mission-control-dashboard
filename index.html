@@ -23,6 +23,26 @@
     <!-- Load financial widget -->
     <script src="financial-widget.js"></script>
     <script>
+        // Embedded default data (will be updated by the daily cron via data.json)
+        const defaultData = {
+            dashboard: {
+                todayTotal: '$3.33',
+                ytdTotal: '$545.86',
+                dailyAverage: '$2.25',
+                openrouterYtd: '$21.60',
+                anthropicYtd: '$107.85',
+                status: '✅'
+            },
+            runningTotals: {
+                apiSpend: '$129.45',
+                fixedCosts: '$416.41',
+                grandTotal: '$545.86',
+                dailyAvgAll: '$2.25/day',
+                dailyAvgApi: '$1.52/day'
+            },
+            lastUpdate: 'March 26, 2026 — 10:36 AM ET'
+        };
+
         // Initialize financial widget on page load
         document.addEventListener('DOMContentLoaded', function() {
             console.log('🚀 Initializing financial widget...');
@@ -31,22 +51,31 @@
                 const widget = new FinancialWidget();
                 const container = document.getElementById('financial-content');
                 
-                // Initial load
-                widget.fetchData().then(data => {
-                    console.log('📊 Data loaded:', data);
-                    container.innerHTML = widget.generateHTML(data);
-                }).catch(err => {
-                    console.error('❌ Financial widget error:', err);
-                    container.innerHTML = '<p style="color: #FF6666;">Unable to load financial data. Please check browser console.</p>';
-                });
+                // Try to fetch live data first
+                console.log('Attempting to fetch live data...');
+                widget.fetchData()
+                    .then(data => {
+                        console.log('✅ Live data loaded:', data);
+                        container.innerHTML = widget.generateHTML(data);
+                    })
+                    .catch(err => {
+                        console.warn('Live data fetch failed, using embedded data:', err);
+                        // Use embedded default data
+                        container.innerHTML = widget.generateHTML(defaultData);
+                    });
                 
                 // Auto-refresh every 5 minutes
                 widget.startAutoRefresh(data => {
-                    console.log('🔄 Refreshing data...');
+                    console.log('🔄 Auto-refresh:', data);
                     container.innerHTML = widget.generateHTML(data);
                 });
             } catch (err) {
                 console.error('❌ Widget initialization failed:', err);
+                // Fallback: render with default data
+                document.getElementById('financial-content').innerHTML = 
+                    '<div class="financial-widget">' +
+                    '<p style="color: #FFAA00;">Dashboard loaded with default data (live update failed)</p>' +
+                    '</div>';
             }
         });
     </script>
