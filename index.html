@@ -32,12 +32,20 @@
                 <p>Loading next tasks...</p>
             </div>
         </section>
+
+        <!-- Integration Health Widget -->
+        <section id="integration-widgets" class="module integration-module">
+            <div id="integration-content">
+                <p>Loading integration status...</p>
+            </div>
+        </section>
     </main>
     
     <!-- Load widgets -->
     <script src="financial-widget.js"></script>
     <script src="kr-widget.js"></script>
     <script src="next-work-widget.js"></script>
+    <script src="integration-health-widget.js"></script>
     <script>
         // Initialize widgets on page load
         document.addEventListener('DOMContentLoaded', function() {
@@ -119,6 +127,34 @@
                 }, 5 * 60 * 1000);
             } catch (err) {
                 console.error('❌ Next work widget initialization failed:', err);
+            }
+
+            // ===== INTEGRATION HEALTH WIDGET =====
+            console.log('🚀 Initializing Integration Health widget...');
+            try {
+                const healthWidget = new IntegrationHealthWidget();
+                const healthContainer = document.getElementById('integration-content');
+                
+                // Initial load
+                healthWidget.fetchData()
+                    .then(data => {
+                        console.log('🔗 Integration health loaded:', data);
+                        healthContainer.innerHTML = healthWidget.generateHTML(data);
+                    })
+                    .catch(err => {
+                        console.error('❌ Integration health widget error:', err);
+                        healthContainer.innerHTML = '<p style="color: #FF6666;">Unable to load health data.</p>';
+                    });
+                
+                // Auto-refresh every 5 minutes
+                setInterval(() => {
+                    healthWidget.fetchData().then(data => {
+                        console.log('🔄 Integration health refresh...');
+                        healthContainer.innerHTML = healthWidget.generateHTML(data);
+                    });
+                }, 5 * 60 * 1000);
+            } catch (err) {
+                console.error('❌ Integration health widget initialization failed:', err);
             }
         });
     </script>

@@ -1,0 +1,46 @@
+{
+  "timestamp": "2026-03-26 12:44 PM ET",
+  "overallStatus": "healthy",
+  "integrations": [
+    {
+      "name": "OpenRouter API",
+      "status": "healthy",
+      "lastCheck": "2 min ago",
+      "endpoint": "api.openrouter.ai",
+      "responseTime": "45ms",
+      "usagePercent": 42
+    },
+    {
+      "name": "Anthropic API",
+      "status": "healthy",
+      "lastCheck": "2 min ago",
+      "endpoint": "api.anthropic.com",
+      "responseTime": "120ms",
+      "usagePercent": 31
+    },
+    {
+      "name": "Google Sheets",
+      "status": "healthy",
+      "lastCheck": "5 min ago",
+      "endpoint": "sheets.googleapis.com",
+      "responseTime": "200ms",
+      "usagePercent": 0
+    },
+    {
+      "name": "GitHub API",
+      "status": "healthy",
+      "lastCheck": "10 min ago",
+      "endpoint": "api.github.com",
+      "responseTime": "180ms",
+      "usagePercent": 15
+    },
+    {
+      "name": "Tailscale",
+      "status": "healthy",
+      "lastCheck": "now",
+      "endpoint": "100.120.100.88",
+      "responseTime": "2ms",
+      "usagePercent": 0
+    }
+  ]
+}
