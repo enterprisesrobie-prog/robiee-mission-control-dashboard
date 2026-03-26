@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mission Control Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Mission Control Dashboard</h1>
+    </header>
+    <main>
+        <section id="decision-log" class="module">
+            <h2>Recent Decisions (Last 7 Days)</h2>
+            <div class="content">
+                <!-- Decision log entries will be loaded here -->
+                <p>Loading decisions...</p>
+            </div>
+        </section>
+
+        <section id="risk-log" class="module">
+            <h2>Critical Risks</h2>
+            <div class="content">
+                <!-- Risk log entries will be loaded here -->
+                <p>Loading risks...</p>
+            </div>
+        </section>
+
+        <section id="work-in-progress" class="module kanban">
+            <h2>Work in Progress</h2>
+            <div class="content">
+                <div class="column done"><h3>Done</h3></div>
+                <div class="column in-progress"><h3>In Progress</h3></div>
+                <div class="column ready"><h3>Ready</h3></div>
+                <div class="column backlog"><h3>Backlog</h3></div>
+            </div>
+        </section>
+
+        <section id="agent-activities" class="module">
+            <h2>Agent Activities</h2>
+            <div class="content">
+                <!-- Agent statuses will be loaded here -->
+                <p>Loading agent statuses...</p>
+            </div>
+        </section>
+
+        <section id="next-work-up" class="module">
+            <h2>Next Work Up</h2>
+            <div class="content">
+                <!-- Next work items will be loaded here -->
+                <p>Loading next tasks...</p>
+            </div>
+        </section>
+
+        <section id="kr-progress" class="module kr-tracker">
+            <h2>KR Progress</h2>
+            <div class="content">
+                <!-- KR progress will be loaded here -->
+                <p>Loading KR progress...</p>
+            </div>
+        </section>
+
+        <section id="financial-widgets" class="module financial-module">
+            <div id="financial-content">
+                <!-- Financial data will be loaded here by financial-widget.js -->
+                <p>Loading financial data...</p>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Load financial widget -->
+    <script src="financial-widget.js"></script>
+    <script>
+        // Initialize financial widget on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const widget = new FinancialWidget();
+            const container = document.getElementById('financial-content');
+            
+            // Initial load
+            widget.fetchData().then(data => {
+                container.innerHTML = widget.generateHTML(data);
+            }).catch(err => {
+                console.error('Financial widget error:', err);
+                container.innerHTML = '<p style="color: orange;">Unable to load financial data. Check Google Sheet access.</p>';
+            });
+            
+            // Auto-refresh every 5 minutes
+            widget.startAutoRefresh(data => {
+                container.innerHTML = widget.generateHTML(data);
+            });
+        });
+    </script>
+</body>
+</html>
