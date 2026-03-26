@@ -78,6 +78,7 @@ class KRWidget {
      */
     getStatusColor(status) {
         switch(status) {
+            case 'complete': return '#44FF44'; // Green
             case 'on-track': return '#44FF44'; // Green
             case 'in-progress': return '#FFAA00'; // Orange
             case 'at-risk': return '#FF6666'; // Red
@@ -92,6 +93,7 @@ class KRWidget {
      */
     getStatusEmoji(status) {
         switch(status) {
+            case 'complete': return '✅';
             case 'on-track': return '✅';
             case 'in-progress': return '🟡';
             case 'at-risk': return '🔴';
