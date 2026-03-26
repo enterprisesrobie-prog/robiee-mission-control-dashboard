@@ -18,64 +18,71 @@
                 <p>Loading financial data...</p>
             </div>
         </section>
+
+        <!-- KR Progress Widget -->
+        <section id="kr-widgets" class="module kr-module">
+            <div id="kr-content">
+                <p>Loading KR progress...</p>
+            </div>
+        </section>
     </main>
     
-    <!-- Load financial widget -->
+    <!-- Load widgets -->
     <script src="financial-widget.js"></script>
+    <script src="kr-widget.js"></script>
     <script>
-        // Embedded default data (will be updated by the daily cron via data.json)
-        const defaultData = {
-            dashboard: {
-                todayTotal: '$3.33',
-                ytdTotal: '$545.86',
-                dailyAverage: '$2.25',
-                openrouterYtd: '$21.60',
-                anthropicYtd: '$107.85',
-                status: '✅'
-            },
-            runningTotals: {
-                apiSpend: '$129.45',
-                fixedCosts: '$416.41',
-                grandTotal: '$545.86',
-                dailyAvgAll: '$2.25/day',
-                dailyAvgApi: '$1.52/day'
-            },
-            lastUpdate: 'March 26, 2026 — 10:36 AM ET'
-        };
-
-        // Initialize financial widget on page load
+        // Initialize widgets on page load
         document.addEventListener('DOMContentLoaded', function() {
+            // ===== FINANCIAL WIDGET =====
             console.log('🚀 Initializing financial widget...');
-            
             try {
                 const widget = new FinancialWidget();
                 const container = document.getElementById('financial-content');
                 
-                // Try to fetch live data first
-                console.log('Attempting to fetch live data...');
-                widget.fetchData()
-                    .then(data => {
-                        console.log('✅ Live data loaded:', data);
-                        container.innerHTML = widget.generateHTML(data);
-                    })
-                    .catch(err => {
-                        console.warn('Live data fetch failed, using embedded data:', err);
-                        // Use embedded default data
-                        container.innerHTML = widget.generateHTML(defaultData);
-                    });
+                // Initial load
+                widget.fetchData().then(data => {
+                    console.log('📊 Financial data loaded:', data);
+                    container.innerHTML = widget.generateHTML(data);
+                }).catch(err => {
+                    console.error('❌ Financial widget error:', err);
+                    container.innerHTML = '<p style="color: #FF6666;">Unable to load financial data. Please check browser console.</p>';
+                });
                 
                 // Auto-refresh every 5 minutes
                 widget.startAutoRefresh(data => {
-                    console.log('🔄 Auto-refresh:', data);
+                    console.log('🔄 Financial data refresh...');
                     container.innerHTML = widget.generateHTML(data);
                 });
             } catch (err) {
-                console.error('❌ Widget initialization failed:', err);
-                // Fallback: render with default data
-                document.getElementById('financial-content').innerHTML = 
-                    '<div class="financial-widget">' +
-                    '<p style="color: #FFAA00;">Dashboard loaded with default data (live update failed)</p>' +
-                    '</div>';
+                console.error('❌ Financial widget initialization failed:', err);
+            }
+
+            // ===== KR WIDGET =====
+            console.log('🚀 Initializing KR widget...');
+            try {
+                const krWidget = new KRWidget();
+                const krContainer = document.getElementById('kr-content');
+                
+                // Initial load
+                krWidget.fetchData()
+                    .then(data => {
+                        console.log('🎯 KR data loaded:', data);
+                        krContainer.innerHTML = krWidget.generateHTML(data);
+                    })
+                    .catch(err => {
+                        console.error('❌ KR widget error:', err);
+                        krContainer.innerHTML = '<p style="color: #FF6666;">Unable to load KR data.</p>';
+                    });
+                
+                // Auto-refresh every 5 minutes
+                setInterval(() => {
+                    krWidget.fetchData().then(data => {
+                        console.log('🔄 KR data refresh...');
+                        krContainer.innerHTML = krWidget.generateHTML(data);
+                    });
+                }, 5 * 60 * 1000);
+            } catch (err) {
+                console.error('❌ KR widget initialization failed:', err);
             }
         });
     </script>
