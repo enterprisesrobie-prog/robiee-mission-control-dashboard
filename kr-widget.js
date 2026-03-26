@@ -161,6 +161,18 @@ class KRWidget {
         <span class="last-update">Updated: ${data.lastUpdated}</span>
     </div>
 
+    <!-- Q1 Outcomes -->
+    <div class="q1-outcomes">
+        <h3>📌 Q1 2026 Outcomes</h3>
+        <div class="outcomes-list">
+            <div class="outcome-item">
+                <h4>O1: Build Foundation & Security</h4>
+                <p>Establish secure, hardened infrastructure and financial structures for AaaS launch</p>
+                <span class="outcome-krs">Supports: All Q1 KRs</span>
+            </div>
+        </div>
+    </div>
+
     <!-- Q1 Section -->
     <div class="kr-section">
         <div class="kr-section-header">
