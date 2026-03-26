@@ -440,3 +440,46 @@ main {
     width: 100%;
     background: linear-gradient(135deg, rgba(0, 150, 255, 0.05), rgba(68, 255, 68, 0.05));
 }
+
+/* KR Section styling */
+.kr-section {
+    margin-bottom: 30px;
+}
+
+.kr-section-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid rgba(68, 255, 68, 0.2);
+}
+
+.kr-section-header h3 {
+    margin: 0;
+    font-size: 1.1em;
+    flex: 1;
+}
+
+.section-badge {
+    background-color: rgba(68, 255, 68, 0.2);
+    color: #44FF44;
+    padding: 6px 12px;
+    border-radius: 15px;
+    font-size: 0.8em;
+    font-weight: bold;
+    border: 1px solid #44FF44;
+}
+
+.section-badge.complete {
+    background-color: rgba(68, 255, 68, 0.3);
+    color: #AAFFAA;
+    border-color: #AAFFAA;
+}
+
+/* Divider between Q1 and Q2 */
+.kr-divider {
+    height: 2px;
+    background: linear-gradient(90deg, transparent, rgba(68, 255, 68, 0.3), transparent);
+    margin: 40px 0;
+}

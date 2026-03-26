@@ -102,20 +102,14 @@ class KRWidget {
     }
 
     /**
-     * Generate HTML for KR widget
+     * Generate HTML for a single KR card
      */
-    generateHTML(data) {
-        const krs = data.krs || [];
-        const onTrack = krs.filter(kr => kr.status === 'on-track').length;
-        const inProgress = krs.filter(kr => kr.status === 'in-progress').length;
-        const blocked = krs.filter(kr => kr.status === 'blocked').length;
-        const notStarted = krs.filter(kr => kr.status === 'not-started').length;
-
-        let krCardsHtml = krs.map(kr => {
-            const statusEmoji = this.getStatusEmoji(kr.status);
-            const progressPercent = kr.progress || 0;
-            
-            return `
+    generateKRCard(kr) {
+        const statusEmoji = this.getStatusEmoji(kr.status);
+        const progressPercent = kr.progress || 0;
+        const dateLabel = kr.completedDate || kr.dueDate || '—';
+        
+        return `
 <div class="kr-card">
     <div class="kr-header">
         <span class="kr-emoji">${statusEmoji}</span>
@@ -128,89 +122,130 @@ class KRWidget {
     </div>
     
     <div class="kr-footer">
-        <span class="kr-due">📅 ${kr.dueDate}</span>
+        <span class="kr-due">📅 ${dateLabel}</span>
         <span class="kr-status" style="color: ${this.getStatusColor(kr.status)}">${kr.status.toUpperCase()}</span>
     </div>
 </div>
-            `;
-        }).join('');
+        `;
+    }
+
+    /**
+     * Generate HTML for KR widget
+     */
+    generateHTML(data) {
+        // Q1 Section
+        const q1 = data.q1 || {};
+        const q1Krs = q1.krs || [];
+        const q1Complete = q1Krs.filter(kr => kr.status === 'complete').length;
+
+        // Q2 Section
+        const q2 = data.q2 || {};
+        const q2Krs = q2.krs || [];
+        const q2OnTrack = q2Krs.filter(kr => kr.status === 'on-track').length;
+        const q2InProgress = q2Krs.filter(kr => kr.status === 'in-progress').length;
+        const q2Blocked = q2Krs.filter(kr => kr.status === 'blocked').length;
+        const q2NotStarted = q2Krs.filter(kr => kr.status === 'not-started').length;
+
+        const q1CardsHtml = q1Krs.map(kr => this.generateKRCard(kr)).join('');
+        const q2CardsHtml = q2Krs.map(kr => this.generateKRCard(kr)).join('');
 
         return `
 <div class="kr-widget">
     <div class="widget-header">
-        <h2>🎯 Q2 2026 Key Results</h2>
-        <span class="phase-badge">${data.phase}</span>
+        <h2>🎯 Key Results 2026</h2>
         <span class="last-update">Updated: ${data.lastUpdated}</span>
     </div>
 
-    <!-- Summary Stats -->
-    <div class="kr-summary">
-        <div class="summary-stat">
-            <span class="stat-emoji">✅</span>
-            <div>
-                <div class="stat-count">${onTrack}</div>
-                <div class="stat-label">On Track</div>
-            </div>
+    <!-- Q1 Section -->
+    <div class="kr-section">
+        <div class="kr-section-header">
+            <h3>Q1 2026 — Foundation & Stability ✅ COMPLETE</h3>
+            <span class="section-badge complete">${q1Complete}/${q1Krs.length} KRs Complete</span>
         </div>
-        <div class="summary-stat">
-            <span class="stat-emoji">🟡</span>
-            <div>
-                <div class="stat-count">${inProgress}</div>
-                <div class="stat-label">In Progress</div>
-            </div>
-        </div>
-        <div class="summary-stat">
-            <span class="stat-emoji">🚫</span>
-            <div>
-                <div class="stat-count">${blocked}</div>
-                <div class="stat-label">Blocked</div>
-            </div>
-        </div>
-        <div class="summary-stat">
-            <span class="stat-emoji">⬜</span>
-            <div>
-                <div class="stat-count">${notStarted}</div>
-                <div class="stat-label">Not Started</div>
-            </div>
+        <div class="kr-cards">
+            ${q1CardsHtml}
         </div>
     </div>
 
-    <!-- KR Cards -->
-    <div class="kr-cards">
-        ${krCardsHtml}
-    </div>
+    <!-- Divider -->
+    <div class="kr-divider"></div>
 
-    <!-- Timeline -->
-    <div class="kr-timeline">
-        <div class="timeline-section">
-            <h4>📆 April — Deploy & Learn</h4>
-            <ul>
-                <li>Apr 1: Kick off N8N workflows</li>
-                <li>Apr 15: First workflow deployed</li>
-                <li>Apr 30: All 3 workflows + agent running</li>
-            </ul>
+    <!-- Q2 Section -->
+    <div class="kr-section">
+        <div class="kr-section-header">
+            <h3>Q2 2026 — Learning Phase 🟡 IN PROGRESS</h3>
+            <span class="phase-badge">${q2.phase}</span>
         </div>
-        <div class="timeline-section">
-            <h4>📆 May — Validate & Refine</h4>
-            <ul>
-                <li>May 1-31: Amber review & sign-off</li>
-                <li>May 15: ROI metrics analyzed</li>
-                <li>May 30: Delivery process refined</li>
-            </ul>
+
+        <!-- Summary Stats for Q2 -->
+        <div class="kr-summary">
+            <div class="summary-stat">
+                <span class="stat-emoji">✅</span>
+                <div>
+                    <div class="stat-count">${q2OnTrack}</div>
+                    <div class="stat-label">On Track</div>
+                </div>
+            </div>
+            <div class="summary-stat">
+                <span class="stat-emoji">🟡</span>
+                <div>
+                    <div class="stat-count">${q2InProgress}</div>
+                    <div class="stat-label">In Progress</div>
+                </div>
+            </div>
+            <div class="summary-stat">
+                <span class="stat-emoji">🚫</span>
+                <div>
+                    <div class="stat-count">${q2Blocked}</div>
+                    <div class="stat-label">Blocked</div>
+                </div>
+            </div>
+            <div class="summary-stat">
+                <span class="stat-emoji">⬜</span>
+                <div>
+                    <div class="stat-count">${q2NotStarted}</div>
+                    <div class="stat-label">Not Started</div>
+                </div>
+            </div>
         </div>
-        <div class="timeline-section">
-            <h4>📆 June — Soft Launch</h4>
-            <ul>
-                <li>Jun 1: First paying customer</li>
-                <li>Jun 30: Q2 results documented</li>
-                <li>Jul 1: Scale planning begins</li>
-            </ul>
+
+        <!-- KR Cards -->
+        <div class="kr-cards">
+            ${q2CardsHtml}
+        </div>
+
+        <!-- Q2 Timeline -->
+        <div class="kr-timeline">
+            <div class="timeline-section">
+                <h4>📆 April — Deploy & Learn</h4>
+                <ul>
+                    <li>Apr 1: Kick off N8N workflows</li>
+                    <li>Apr 15: First workflow deployed</li>
+                    <li>Apr 30: All 3 workflows + agent running</li>
+                </ul>
+            </div>
+            <div class="timeline-section">
+                <h4>📆 May — Validate & Refine</h4>
+                <ul>
+                    <li>May 1-31: Amber review & sign-off</li>
+                    <li>May 15: ROI metrics analyzed</li>
+                    <li>May 30: Delivery process refined</li>
+                </ul>
+            </div>
+            <div class="timeline-section">
+                <h4>📆 June — Soft Launch</h4>
+                <ul>
+                    <li>Jun 1: First paying customer</li>
+                    <li>Jun 30: Q2 results documented</li>
+                    <li>Jul 1: Scale planning begins</li>
+                </ul>
+            </div>
         </div>
     </div>
 
     <div class="widget-footer">
-        <p>🎯 Learning-first approach: April tests, May validates, June launches</p>
-        <p>📊 Track progress at: <a href="https://github.com/users/enterprisesrobie-prog/projects/1" target="_blank">RobieE Command Board</a></p>
+        <p>📈 Q1: Foundation laid ✅ | Q2: Learning phase 🟡 | Q3: Scale 📊</p>
+        <p>🔗 Track progress: <a href="https://github.com/users/enterprisesrobie-prog/projects/1" target="_blank">RobieE Command Board</a></p>
     </div>
 </div>
         `;

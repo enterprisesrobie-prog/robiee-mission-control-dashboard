@@ -1,113 +1,153 @@
 {
-  "quarter": "Q2 2026",
-  "phase": "Learning Phase",
-  "timeline": "April 1 - June 30",
-  "status": "Planning",
-  "krs": [
-    {
-      "id": "KR-1",
-      "title": "Deploy 3 N8N Workflows",
-      "description": "Standardized discovery + deployment process",
-      "target": "3 workflows",
-      "current": "0",
-      "progress": 0,
-      "status": "not-started",
-      "dueDate": "2026-04-30",
-      "owner": "Robie",
-      "details": {
-        "workflow1": "Meal Planning",
-        "workflow2": "Grocery List Management",
-        "workflow3": "TBD"
+  "q1": {
+    "quarter": "Q1 2026",
+    "phase": "Foundation & Stability",
+    "timeline": "Jan 1 - Mar 26",
+    "status": "Complete",
+    "krs": [
+      {
+        "id": "Q1-KR-1",
+        "title": "Security Hardening (12 Tasks)",
+        "description": "Firewall, SSH, encryption, incident response",
+        "target": "12 tasks",
+        "current": "12",
+        "progress": 100,
+        "status": "complete",
+        "completedDate": "2026-03-26",
+        "owner": "Robie",
+        "details": {
+          "tasks": "Firewall hardening, Tailscale encryption, incident runbook, cron optimization, Meter auth, channel segregation"
+        }
+      },
+      {
+        "id": "Q1-KR-2",
+        "title": "Financial Structures & Tracking",
+        "description": "Chart of Accounts, Close Process, Cost Tracking, Mission Control Dashboard",
+        "target": "Complete",
+        "current": "100%",
+        "progress": 100,
+        "status": "complete",
+        "completedDate": "2026-03-26",
+        "owner": "Robie",
+        "details": {
+          "deliverables": "Chart of Accounts, P&L template, Monthly close playbook, Cost tracking pipeline, Mission Control Dashboard + automated daily updates"
+        }
+      },
+      {
+        "id": "Q1-KR-3",
+        "title": "N8N Strategy Research (5 Phases)",
+        "description": "Investigation of N8N for workflow automation standardization",
+        "target": "Complete",
+        "current": "100%",
+        "progress": 100,
+        "status": "complete",
+        "completedDate": "2026-03-24",
+        "owner": "Robie",
+        "details": {
+          "phases": "Discovery → Scoping → Integration → Deployment → Optimization"
+        }
+      },
+      {
+        "id": "Q1-KR-4",
+        "title": "Board Restructure & Cleanup",
+        "description": "Organized 114+ tasks into epics/features/tasks, created Q2 AaaS epic with 28 ready tasks",
+        "target": "Complete",
+        "current": "100%",
+        "progress": 100,
+        "status": "complete",
+        "completedDate": "2026-03-26",
+        "owner": "Robie",
+        "details": {
+          "cleanup": "Removed duplicates, relabeled mislabeled items, structured Q2 AaaS learning phase"
+        }
       }
-    },
-    {
-      "id": "KR-2",
-      "title": "Launch 1 OpenClaw Agent Pilot",
-      "description": "Friend/family pilot with Kimi K2.5 (free)",
-      "target": "1 agent",
-      "current": "0",
-      "progress": 0,
-      "status": "not-started",
-      "dueDate": "2026-04-30",
-      "owner": "Robie",
-      "details": {
-        "model": "NVIDIA Kimi K2.5",
-        "cost": "Free",
-        "supervision": "Background monitoring"
-      }
-    },
-    {
-      "id": "KR-3",
-      "title": "Amber Validation & Sign-Off",
-      "description": "Amber reviews working workflows + demo, approves business model",
-      "target": "Written approval",
-      "current": "0%",
-      "progress": 0,
-      "status": "blocked",
-      "dueDate": "2026-05-31",
-      "owner": "Ron + Amber",
-      "details": {
-        "deliverables": ["Working N8N workflows", "Agent demo", "ROI documentation"],
-        "blocker": "Waiting for April deployment"
-      }
-    },
-    {
-      "id": "KR-4",
-      "title": "First Paying Customer (Tier 1A)",
-      "description": "Soft launch: discounted first customer to validate delivery",
-      "target": "1 customer",
-      "current": "0",
-      "progress": 0,
-      "status": "not-started",
-      "dueDate": "2026-06-30",
-      "owner": "Ron",
-      "details": {
-        "tier": "Tier 1A ($200-300/month)",
-        "contract": "Month-to-month",
-        "source": "Warm network / Ron's contacts"
-      }
-    },
-    {
-      "id": "KR-5",
-      "title": "Document Delivery Process & ROI Methodology",
-      "description": "Standardized process for discovery, deployment, measurement",
-      "target": "Complete documentation",
-      "current": "30%",
-      "progress": 30,
-      "status": "in-progress",
-      "dueDate": "2026-06-30",
-      "owner": "Robie",
-      "details": {
-        "completed": ["N8N standardization (4 phases)", "Financial structures"],
-        "remaining": ["Delivery playbook", "ROI templates", "Support procedures"]
-      }
-    }
-  ],
-  "schedule": {
-    "april": {
-      "phase": "Deploy & Learn",
-      "milestones": [
-        "April 1: Kick off N8N workflows",
-        "April 15: First workflow deployed",
-        "April 30: All 3 workflows + agent pilot running"
-      ]
-    },
-    "may": {
-      "phase": "Validate & Refine",
-      "milestones": [
-        "May 1-31: Amber review & sign-off",
-        "May 15: ROI metrics analyzed",
-        "May 30: Delivery process refined"
-      ]
-    },
-    "june": {
-      "phase": "Soft Launch & Q2 Closeout",
-      "milestones": [
-        "June 1: First paying customer onboard",
-        "June 30: Q2 results documented",
-        "July 1: Scale planning begins"
-      ]
-    }
+    ]
   },
-  "lastUpdated": "2026-03-26 12:30 PM ET"
+  "q2": {
+    "quarter": "Q2 2026",
+    "phase": "Learning Phase",
+    "timeline": "April 1 - June 30",
+    "status": "Planning",
+    "krs": [
+      {
+        "id": "Q2-KR-1",
+        "title": "Deploy 3 N8N Workflows",
+        "description": "Standardized discovery + deployment process",
+        "target": "3 workflows",
+        "current": "0",
+        "progress": 0,
+        "status": "not-started",
+        "dueDate": "2026-04-30",
+        "owner": "Robie",
+        "details": {
+          "workflow1": "Meal Planning",
+          "workflow2": "Grocery List Management",
+          "workflow3": "TBD"
+        }
+      },
+      {
+        "id": "Q2-KR-2",
+        "title": "Launch 1 OpenClaw Agent Pilot",
+        "description": "Friend/family pilot with Kimi K2.5 (free)",
+        "target": "1 agent",
+        "current": "0",
+        "progress": 0,
+        "status": "not-started",
+        "dueDate": "2026-04-30",
+        "owner": "Robie",
+        "details": {
+          "model": "NVIDIA Kimi K2.5",
+          "cost": "Free",
+          "supervision": "Background monitoring"
+        }
+      },
+      {
+        "id": "Q2-KR-3",
+        "title": "Amber Validation & Sign-Off",
+        "description": "Amber reviews working workflows + demo, approves business model",
+        "target": "Written approval",
+        "current": "0%",
+        "progress": 0,
+        "status": "blocked",
+        "dueDate": "2026-05-31",
+        "owner": "Ron + Amber",
+        "details": {
+          "deliverables": ["Working N8N workflows", "Agent demo", "ROI documentation"],
+          "blocker": "Waiting for April deployment"
+        }
+      },
+      {
+        "id": "Q2-KR-4",
+        "title": "First Paying Customer (Tier 1A)",
+        "description": "Soft launch: discounted first customer to validate delivery",
+        "target": "1 customer",
+        "current": "0",
+        "progress": 0,
+        "status": "not-started",
+        "dueDate": "2026-06-30",
+        "owner": "Ron",
+        "details": {
+          "tier": "Tier 1A ($200-300/month)",
+          "contract": "Month-to-month",
+          "source": "Warm network / Ron's contacts"
+        }
+      },
+      {
+        "id": "Q2-KR-5",
+        "title": "Document Delivery Process & ROI Methodology",
+        "description": "Standardized process for discovery, deployment, measurement",
+        "target": "Complete documentation",
+        "current": "30%",
+        "progress": 30,
+        "status": "in-progress",
+        "dueDate": "2026-06-30",
+        "owner": "Robie",
+        "details": {
+          "completed": ["N8N standardization (4 phases)", "Financial structures"],
+          "remaining": ["Delivery playbook", "ROI templates", "Support procedures"]
+        }
+      }
+    ]
+  },
+  "lastUpdated": "2026-03-26 12:33 PM ET"
 }
