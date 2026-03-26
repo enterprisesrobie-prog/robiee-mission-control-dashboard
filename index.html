@@ -25,11 +25,19 @@
                 <p>Loading KR progress...</p>
             </div>
         </section>
+
+        <!-- Next Work Up Widget -->
+        <section id="next-work-widgets" class="module next-work-module">
+            <div id="next-work-content">
+                <p>Loading next tasks...</p>
+            </div>
+        </section>
     </main>
     
     <!-- Load widgets -->
     <script src="financial-widget.js"></script>
     <script src="kr-widget.js"></script>
+    <script src="next-work-widget.js"></script>
     <script>
         // Initialize widgets on page load
         document.addEventListener('DOMContentLoaded', function() {
@@ -83,6 +91,34 @@
                 }, 5 * 60 * 1000);
             } catch (err) {
                 console.error('❌ KR widget initialization failed:', err);
+            }
+
+            // ===== NEXT WORK WIDGET =====
+            console.log('🚀 Initializing Next Work widget...');
+            try {
+                const nextWorkWidget = new NextWorkWidget();
+                const nextWorkContainer = document.getElementById('next-work-content');
+                
+                // Initial load
+                nextWorkWidget.fetchData()
+                    .then(data => {
+                        console.log('📋 Next work data loaded:', data);
+                        nextWorkContainer.innerHTML = nextWorkWidget.generateHTML(data);
+                    })
+                    .catch(err => {
+                        console.error('❌ Next work widget error:', err);
+                        nextWorkContainer.innerHTML = '<p style="color: #FF6666;">Unable to load task data.</p>';
+                    });
+                
+                // Auto-refresh every 5 minutes
+                setInterval(() => {
+                    nextWorkWidget.fetchData().then(data => {
+                        console.log('🔄 Next work data refresh...');
+                        nextWorkContainer.innerHTML = nextWorkWidget.generateHTML(data);
+                    });
+                }, 5 * 60 * 1000);
+            } catch (err) {
+                console.error('❌ Next work widget initialization failed:', err);
             }
         });
     </script>

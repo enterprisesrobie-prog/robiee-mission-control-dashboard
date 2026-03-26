@@ -483,3 +483,197 @@ main {
     background: linear-gradient(90deg, transparent, rgba(68, 255, 68, 0.3), transparent);
     margin: 40px 0;
 }
+
+/* Next Work Widget Styling */
+.next-work-widget {
+    padding: 0;
+}
+
+.next-work-module {
+    width: 100%;
+    background: linear-gradient(135deg, rgba(255, 170, 0, 0.05), rgba(68, 255, 68, 0.05));
+}
+
+.wip-status {
+    display: flex;
+    gap: 20px;
+    margin: 20px 0;
+    padding: 15px;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+}
+
+.wip-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+}
+
+.wip-emoji {
+    font-size: 1.8em;
+}
+
+.ready-emoji {
+    font-size: 1.8em;
+    color: #888888;
+}
+
+.wip-label {
+    font-size: 0.75em;
+    color: rgba(255, 255, 255, 0.6);
+    text-transform: uppercase;
+}
+
+.wip-count {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #AAFFAA;
+}
+
+.tasks-list {
+    margin: 20px 0;
+}
+
+.tasks-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid rgba(68, 255, 68, 0.2);
+}
+
+.tasks-header h3 {
+    margin: 0;
+    font-size: 1em;
+}
+
+.tasks-note {
+    font-size: 0.75em;
+    color: rgba(255, 255, 255, 0.5);
+    font-style: italic;
+}
+
+.tasks-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 12px;
+}
+
+.task-card {
+    background-color: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 170, 0, 0.2);
+    border-radius: 6px;
+    padding: 12px;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.task-card:hover {
+    background-color: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 170, 0, 0.5);
+    box-shadow: 0 0 10px rgba(255, 170, 0, 0.15);
+}
+
+.task-number {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 0.7em;
+    color: rgba(255, 255, 255, 0.4);
+    font-weight: bold;
+    font-family: 'Courier New', monospace;
+}
+
+.task-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.priority-badge {
+    font-size: 1.2em;
+    flex-shrink: 0;
+    margin-top: 2px;
+}
+
+.task-title {
+    margin: 0;
+    font-size: 0.9em;
+    color: #FFFFFF;
+    line-height: 1.3;
+}
+
+.task-meta {
+    display: flex;
+    gap: 10px;
+    font-size: 0.75em;
+    margin: 8px 0;
+    flex-wrap: wrap;
+}
+
+.task-feature {
+    background-color: rgba(68, 255, 68, 0.15);
+    color: #AAFFAA;
+    padding: 3px 8px;
+    border-radius: 3px;
+    border: 1px solid rgba(68, 255, 68, 0.2);
+}
+
+.task-estimate {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.task-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 0.75em;
+}
+
+.task-owner {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.task-link {
+    color: #FFAA00;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.2s ease;
+}
+
+.task-link:hover {
+    color: #FFCC00;
+    text-decoration: underline;
+}
+
+.quick-actions {
+    display: flex;
+    gap: 10px;
+    margin: 20px 0;
+    flex-wrap: wrap;
+}
+
+.action-btn {
+    background-color: rgba(255, 170, 0, 0.2);
+    border: 1px solid rgba(255, 170, 0, 0.4);
+    color: #FFAA00;
+    padding: 10px 15px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.9em;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.action-btn:hover {
+    background-color: rgba(255, 170, 0, 0.3);
+    border-color: rgba(255, 170, 0, 0.6);
+    box-shadow: 0 0 8px rgba(255, 170, 0, 0.2);
+}
