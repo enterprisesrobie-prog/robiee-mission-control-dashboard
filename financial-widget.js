@@ -1,123 +1,73 @@
 /**
  * Mission Control Dashboard — Financial Widget
- * Fetches cost data from Google Sheet and displays in real-time
- * 
- * Data source: RobieE Mission Control Dashboard (Google Sheet)
- * Spreadsheet ID: 1OH2rnWQaAkxCX-vb42y5uDk91rROQ7jzxNrGHTwz3Lw
+ * Fetches cost data from local data.json (updated daily by cron)
  */
 
 class FinancialWidget {
     constructor() {
-        this.spreadsheetId = '1OH2rnWQaAkxCX-vb42y5uDk91rROQ7jzxNrGHTwz3Lw';
-        this.apiKey = process.env.GOOGLE_SHEETS_API_KEY || 'AIzaSyBXXXXXXXXXXXXXXXXXXXXXXXXX'; // Will be set at runtime
+        this.dataUrl = './data.json';
         this.refreshInterval = 5 * 60 * 1000; // Refresh every 5 minutes
-        this.lastUpdate = null;
+        console.log('✅ FinancialWidget initialized, dataUrl:', this.dataUrl);
     }
 
     /**
-     * Fetch current financial data from Google Sheet
+     * Fetch financial data from local JSON file
      */
     async fetchData() {
         try {
-            const dashboardData = await this.fetchSheetData('Dashboard', 'A1:C30');
-            const runningTotals = await this.fetchSheetData('Running Totals', 'A1:D20');
+            console.log('📡 Fetching data from:', this.dataUrl);
+            const response = await fetch(this.dataUrl, {
+                method: 'GET',
+                headers: { 'Accept': 'application/json' }
+            });
             
-            return {
-                dashboard: this.parseDashboardSheet(dashboardData),
-                runningTotals: this.parseRunningTotals(runningTotals),
-                lastUpdate: new Date().toLocaleString('en-US', { timeZone: 'America/Indiana/Indianapolis' })
-            };
+            console.log('Response status:', response.status, response.statusText);
+            
+            if (!response.ok) {
+                throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+            }
+            
+            const data = await response.json();
+            console.log('✅ Data loaded successfully:', data);
+            return data;
         } catch (error) {
-            console.error('Failed to fetch financial data:', error);
-            return this.getDefaultData();
+            console.error('❌ Failed to fetch data:', error);
+            const defaultData = this.getDefaultData();
+            console.log('Using default data:', defaultData);
+            return defaultData;
         }
     }
 
     /**
-     * Fetch specific range from Google Sheet
-     * Uses public API if API key available, otherwise falls back to CSV export
+     * Default data if fetch fails
      */
-    async fetchSheetData(sheetName, range) {
-        // Method 1: Try Google Sheets API (if API key available)
-        if (this.apiKey && !this.apiKey.includes('XXXXX')) {
-            const url = `https://sheets.googleapis.com/v4/spreadsheets/${this.spreadsheetId}/values/'${sheetName}'!${range}?key=${this.apiKey}`;
-            const response = await fetch(url);
-            if (response.ok) {
-                const data = await response.json();
-                return data.values || [];
-            }
-        }
-
-        // Method 2: Fall back to CSV export (no auth needed)
-        const csvUrl = `https://docs.google.com/spreadsheets/d/${this.spreadsheetId}/export?format=csv&gid=0`;
-        const response = await fetch(csvUrl);
-        if (response.ok) {
-            const csv = await response.text();
-            return this.parseCSV(csv);
-        }
-
-        throw new Error('Unable to fetch sheet data');
-    }
-
-    /**
-     * Parse CSV data
-     */
-    parseCSV(csv) {
-        return csv.split('\n').map(line => line.split(','));
-    }
-
-    /**
-     * Parse Dashboard sheet
-     */
-    parseDashboardSheet(data) {
-        const dashboard = {};
-        
-        // Extract key metrics
-        data.forEach((row, idx) => {
-            if (row[0] && row[1]) {
-                const metric = row[0].trim();
-                const value = row[1].trim();
-                
-                // Map common metrics
-                if (metric.includes("Today's Total")) dashboard.todayTotal = value;
-                if (metric.includes("YTD Total")) dashboard.ytdTotal = value;
-                if (metric.includes("Daily Average")) dashboard.dailyAverage = value;
-                if (metric.includes("OpenRouter YTD")) dashboard.openrouterYtd = value;
-                if (metric.includes("Anthropic API YTD")) dashboard.anthropicYtd = value;
-                if (metric.includes("Status")) dashboard.status = row[2]?.trim() || '✅';
-            }
-        });
-
-        return dashboard;
-    }
-
-    /**
-     * Parse Running Totals sheet
-     */
-    parseRunningTotals(data) {
-        const totals = {};
-        
-        data.forEach((row) => {
-            if (row[0]) {
-                const label = row[0].trim();
-                
-                if (label.includes('API Spend')) totals.apiSpend = row[1]?.trim();
-                if (label.includes('Fixed Costs')) totals.fixedCosts = row[1]?.trim();
-                if (label.includes('GRAND TOTAL')) totals.grandTotal = row[3]?.trim();
-                if (label.includes('Daily Average (all)')) totals.dailyAvgAll = row[1]?.trim();
-                if (label.includes('Daily Average (API)')) totals.dailyAvgApi = row[1]?.trim();
-            }
-        });
-
-        return totals;
+    getDefaultData() {
+        return {
+            dashboard: {
+                todayTotal: '$3.33',
+                ytdTotal: '$545.86',
+                dailyAverage: '$2.25',
+                openrouterYtd: '$21.60',
+                anthropicYtd: '$107.85',
+                status: '✅'
+            },
+            runningTotals: {
+                apiSpend: '$129.45',
+                fixedCosts: '$416.41',
+                grandTotal: '$545.86',
+                dailyAvgAll: '$2.25/day',
+                dailyAvgApi: '$1.52/day'
+            },
+            lastUpdate: '(default data - unable to load from server)'
+        };
     }
 
     /**
      * Generate HTML for the financial widget
      */
     generateHTML(data) {
-        const dashboard = data.dashboard;
-        const totals = data.runningTotals;
+        const dashboard = data.dashboard || {};
+        const totals = data.runningTotals || {};
         const status = dashboard.status || '✅';
 
         return `
@@ -125,7 +75,7 @@ class FinancialWidget {
     <div class="widget-header">
         <h2>💰 Financial Status</h2>
         <span class="status ${status.includes('✅') ? 'healthy' : 'warning'}">${status}</span>
-        <span class="last-update">Updated: ${data.lastUpdate}</span>
+        <span class="last-update">Updated: ${data.lastUpdate || 'Loading...'}</span>
     </div>
 
     <div class="widget-grid">
@@ -187,7 +137,7 @@ class FinancialWidget {
     </div>
 
     <div class="widget-footer">
-        <p>📊 Data from <a href="https://docs.google.com/spreadsheets/d/${this.spreadsheetId}" target="_blank">Mission Control Dashboard</a></p>
+        <p>📊 Data from <a href="https://docs.google.com/spreadsheets/d/1OH2rnWQaAkxCX-vb42y5uDk91rROQ7jzxNrGHTwz3Lw" target="_blank">Mission Control Dashboard (Google Sheet)</a></p>
         <p>🔄 Auto-updates every 5 minutes | Cost data updated daily at 8:00 AM ET</p>
     </div>
 </div>
@@ -204,39 +154,26 @@ class FinancialWidget {
     }
 
     /**
-     * Default data if fetch fails
-     */
-    getDefaultData() {
-        return {
-            dashboard: {
-                todayTotal: '$-',
-                ytdTotal: '$545.86',
-                dailyAverage: '$2.25',
-                openrouterYtd: '$21.60',
-                anthropicYtd: '$107.85',
-                status: '⚠️ Loading...'
-            },
-            runningTotals: {
-                apiSpend: '$129.45',
-                fixedCosts: '$416.41',
-                grandTotal: '$545.86',
-                dailyAvgAll: '$2.25/day',
-                dailyAvgApi: '$1.52/day'
-            },
-            lastUpdate: 'Loading...'
-        };
-    }
-
-    /**
      * Start auto-refresh
      */
     startAutoRefresh(callback) {
+        console.log('🔄 Starting auto-refresh (every 5 minutes)');
+        
         // Initial load
-        this.fetchData().then(callback);
+        this.fetchData().then(data => {
+            console.log('Initial data loaded, rendering...');
+            callback(data);
+        }).catch(err => {
+            console.error('Initial load failed:', err);
+            callback(this.getDefaultData());
+        });
 
         // Refresh every 5 minutes
         setInterval(() => {
-            this.fetchData().then(callback);
+            console.log('🔄 Auto-refresh tick...');
+            this.fetchData().then(callback).catch(err => {
+                console.error('Refresh failed:', err);
+            });
         }, this.refreshInterval);
     }
 }

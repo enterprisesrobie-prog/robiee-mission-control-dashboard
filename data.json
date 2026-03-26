@@ -1,0 +1,18 @@
+{
+  "dashboard": {
+    "todayTotal": "$3.33",
+    "ytdTotal": "$545.86",
+    "dailyAverage": "$2.25/day",
+    "openrouterYtd": "$21.60",
+    "anthropicYtd": "$107.85",
+    "status": "\u2705"
+  },
+  "runningTotals": {
+    "apiSpend": "$129.45",
+    "fixedCosts": "$-",
+    "grandTotal": "$545.86",
+    "dailyAvgAll": "$2.25",
+    "dailyAvgApi": "$-"
+  },
+  "lastUpdate": "2026-03-26 10:36 AM ET"
+}

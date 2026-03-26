@@ -14,8 +14,8 @@ header {
 
 main {
     padding: 20px;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Responsive columns */
+    display: flex;
+    flex-direction: column;
     gap: 20px;
 }
 
@@ -75,7 +75,7 @@ main {
 
 /* Financial Widget Styling */
 .financial-module {
-    grid-column: 1 / -1; /* Span full width */
+    width: 100%;
     background: linear-gradient(135deg, rgba(0, 255, 0, 0.05), rgba(0, 100, 255, 0.05));
 }
 
