@@ -110,9 +110,12 @@ class KRWidget {
         const statusEmoji = this.getStatusEmoji(kr.status);
         const progressPercent = kr.progress || 0;
         const dateLabel = kr.completedDate || kr.dueDate || '—';
+        const outcomeLabel = kr.outcomeTitle || kr.outcome || '';
         
         return `
 <div class="kr-card">
+    ${outcomeLabel ? `<div class="kr-outcome">${outcomeLabel}</div>` : ''}
+    
     <div class="kr-header">
         <span class="kr-emoji">${statusEmoji}</span>
         <h4 class="kr-title">${kr.title}</h4>
@@ -171,6 +174,28 @@ class KRWidget {
 
     <!-- Divider -->
     <div class="kr-divider"></div>
+
+    <!-- Q2 Outcomes -->
+    <div class="q2-outcomes">
+        <h3>📌 Q2 2026 Outcomes</h3>
+        <div class="outcomes-list">
+            <div class="outcome-item">
+                <h4>O1: Prove N8N + Agent Automation Works</h4>
+                <p>Demonstrate automation solves real business problems with measurable ROI</p>
+                <span class="outcome-krs">Supports: KR-1, KR-2, KR-5</span>
+            </div>
+            <div class="outcome-item">
+                <h4>O2: Validate Business Model with Amber</h4>
+                <p>Get Amber's confidence and sign-off on service model, pricing, and go-to-market</p>
+                <span class="outcome-krs">Supports: KR-3</span>
+            </div>
+            <div class="outcome-item">
+                <h4>O3: Launch First Revenue-Generating Customer</h4>
+                <p>Onboard and deliver for first paying Tier 1A customer, proving delivery capability</p>
+                <span class="outcome-krs">Supports: KR-4</span>
+            </div>
+        </div>
+    </div>
 
     <!-- Q2 Section -->
     <div class="kr-section">

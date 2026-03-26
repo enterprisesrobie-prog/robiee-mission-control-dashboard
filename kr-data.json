@@ -1,9 +1,28 @@
 {
+  "outcomes": {
+    "O1": {
+      "title": "Prove N8N + Agent Automation Works",
+      "description": "Demonstrate that workflow automation (N8N) + AI agents solve real business problems with measurable ROI",
+      "krs": ["KR-1", "KR-2", "KR-5"]
+    },
+    "O2": {
+      "title": "Validate Business Model with Amber",
+      "description": "Get Amber's confidence and sign-off on RobieE's service model, pricing tiers, and go-to-market approach",
+      "krs": ["KR-3"]
+    },
+    "O3": {
+      "title": "Launch First Revenue-Generating Customer",
+      "description": "Onboard and successfully deliver for first paying Tier 1A customer, proving delivery capability",
+      "krs": ["KR-4"]
+    }
+  },
   "q1": {
     "quarter": "Q1 2026",
     "phase": "Foundation & Stability",
     "timeline": "Jan 1 - Mar 26",
     "status": "Complete",
+    "outcome": "O0-Q1",
+    "outcomeTitle": "Build Foundation & Security",
     "krs": [
       {
         "id": "Q1-KR-1",
@@ -73,6 +92,8 @@
         "id": "Q2-KR-1",
         "title": "Deploy 3 N8N Workflows",
         "description": "Standardized discovery + deployment process",
+        "outcome": "O1",
+        "outcomeTitle": "Prove N8N + Agent Automation Works",
         "target": "3 workflows",
         "current": "0",
         "progress": 0,
@@ -89,6 +110,8 @@
         "id": "Q2-KR-2",
         "title": "Launch 1 OpenClaw Agent Pilot",
         "description": "Friend/family pilot with Kimi K2.5 (free)",
+        "outcome": "O1",
+        "outcomeTitle": "Prove N8N + Agent Automation Works",
         "target": "1 agent",
         "current": "0",
         "progress": 0,
@@ -105,6 +128,8 @@
         "id": "Q2-KR-3",
         "title": "Amber Validation & Sign-Off",
         "description": "Amber reviews working workflows + demo, approves business model",
+        "outcome": "O2",
+        "outcomeTitle": "Validate Business Model with Amber",
         "target": "Written approval",
         "current": "0%",
         "progress": 0,
@@ -120,6 +145,8 @@
         "id": "Q2-KR-4",
         "title": "First Paying Customer (Tier 1A)",
         "description": "Soft launch: discounted first customer to validate delivery",
+        "outcome": "O3",
+        "outcomeTitle": "Launch First Revenue-Generating Customer",
         "target": "1 customer",
         "current": "0",
         "progress": 0,
@@ -136,6 +163,8 @@
         "id": "Q2-KR-5",
         "title": "Document Delivery Process & ROI Methodology",
         "description": "Standardized process for discovery, deployment, measurement",
+        "outcome": "O1",
+        "outcomeTitle": "Prove N8N + Agent Automation Works",
         "target": "Complete documentation",
         "current": "30%",
         "progress": 30,
